@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:islami_app/layoutView.dart';
-import 'package:islami_app/splashView.dart';
 
 class LayoutView extends StatefulWidget {
  const LayoutView({super.key});
