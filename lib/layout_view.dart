@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:islami_app/layoutView.dart';
-import 'package:islami_app/splashView.dart';
+import 'package:islami_app/modules/hadith/hadith-view.dart';
+import 'package:islami_app/modules/quran/quran-view.dart';
+import 'package:islami_app/modules/radio/radio-view.dart';
+import 'package:islami_app/modules/sebha/sebha-view.dart';
+import 'package:islami_app/modules/settings/settings-view.dart';
+
+
 
 class LayoutView extends StatefulWidget {
  const LayoutView({super.key});
@@ -12,28 +17,13 @@ class LayoutView extends StatefulWidget {
 
 class _LayoutViewState extends State<LayoutView> {
   int selectedIndex = 0;
-  List<Widget> screensList=[
-    const Center(child: Text('Radio Screen', style: TextStyle( fontFamily: "El Messiri",
-        fontSize: 30,
-        fontWeight: FontWeight.bold,
-        color: Color(0xFF242424)),),),
-    const Center(child: Text('Sebha Screen',style: TextStyle( fontFamily: "El Messiri",
-        fontSize: 30,
-        fontWeight: FontWeight.bold,
-        color: Color(0xFF242424)),)),
-    const Center(child: Text('Hadeeth Screen',style: TextStyle( fontFamily: "El Messiri",
-        fontSize: 30,
-        fontWeight: FontWeight.bold,
-        color: Color(0xFF242424)),)),
-    const Center(child: Text('Quran Screen',style: TextStyle( fontFamily: "El Messiri",
-        fontSize: 30,
-        fontWeight: FontWeight.bold,
-        color: Color(0xFF242424)),)),
-    const Center(child: Text('Settings Screen',style: TextStyle( fontFamily: "El Messiri",
-        fontSize: 30,
-        fontWeight: FontWeight.bold,
-        color: Color(0xFF242424)),)),
-  ];
+ List<Widget>screensList =[
+   RadioView(),
+   SebhaView(),
+   HadithView(),
+   QuranView(),
+   SettingsView(),
+ ];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,6 +40,7 @@ class _LayoutViewState extends State<LayoutView> {
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: selectedIndex,
+          //selectedLabelStyle: Theme.of(context).textTheme.displaySmall,
           onTap: (value) {
             setState(() {
               selectedIndex = value;
@@ -72,7 +63,7 @@ class _LayoutViewState extends State<LayoutView> {
               label: "Hadeeth",
             ),
             BottomNavigationBarItem(
-              icon: ImageIcon(AssetImage("assets/icons/quran.png")),
+              icon: ImageIcon(AssetImage("assets/icons/moshaf_gold.png")),
               label: "Quran",
             ),
             BottomNavigationBarItem(
@@ -85,3 +76,5 @@ class _LayoutViewState extends State<LayoutView> {
     );
   }
 }
+
+

@@ -63,6 +63,8 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/core/
+    - assets/files/
+    - assets/ahadeth/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
