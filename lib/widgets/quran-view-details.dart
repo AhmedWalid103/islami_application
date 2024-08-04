@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:islami_app/modules/quran/quran-view.dart';
+import 'package:provider/provider.dart';
+
+import '../core/settings_provider.dart';
 class QuranViewDetails extends StatefulWidget {
   const QuranViewDetails({super.key});
   static const String routeName = "q";
@@ -26,10 +29,12 @@ class _QuranViewDetailsState extends State<QuranViewDetails> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var data  = ModalRoute.of(context)?.settings.arguments as SuraData ;
+    var provider=Provider.of<SettingsProvider>(context);
+
     if(content.isEmpty) loadText(data.suraNumber);
     return Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(image: AssetImage("assets/core/background1.png"),
+        decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage(provider.getHomeBackground()),
           fit: BoxFit.cover)
         ),
       child: Scaffold(
@@ -49,7 +54,7 @@ class _QuranViewDetailsState extends State<QuranViewDetails> {
               left: 30,
           ),
           decoration: BoxDecoration(
-            color: const Color(0xFFF8F8F8).withOpacity(0.9),
+            color: provider.isLight()? const Color(0xFFF8F8F8):const Color(0xFF141A2E).withOpacity(0.5),
             borderRadius: BorderRadius.circular(25),
           ),
           child: Column(
@@ -57,15 +62,18 @@ class _QuranViewDetailsState extends State<QuranViewDetails> {
               Row(
                 mainAxisAlignment:MainAxisAlignment.center,
                 children: [
-                  Text(data.suraName),
-                  const Icon(Icons.play_circle_fill_rounded,color: Color(0xFF242424),)
+                  Text(data.suraName,style: TextStyle(
+                      color: provider.isLight()?const Color(0xFF242424):const Color(0xFFFACC1D)
+                  ),),
+                  Icon(Icons.play_circle_fill_rounded,color:provider.isLight()?const Color(0xFF242424):const Color(0xFFFACC1D) ,)
                 ],
               ),
               const Divider(),
                Expanded(
                  child: ListView.builder(itemBuilder:(context,index)=>Text(
                    lines[index],
-                   style: theme.textTheme.bodySmall?.copyWith(height: 2),
+                   style: theme.textTheme.bodySmall?.copyWith(height: 2,
+                       color: provider.isLight()?const Color(0xFF242424):const Color(0xFFFACC1D)),
                    textAlign: TextAlign.center,),
                    itemCount: lines.length,
 

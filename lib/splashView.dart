@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:islami_app/layout_view.dart';
+import 'package:provider/provider.dart';
+
+import 'core/settings_provider.dart';
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
 static const String routeName="/";
@@ -18,7 +21,8 @@ class _SplashViewState extends State<SplashView> {
   }
   @override
   Widget build(BuildContext context) {
-    return Image.asset("assets/images/splash.png",
+    var provider=Provider.of<SettingsProvider>(context);
+    return Image.asset(provider.getSplash(),
     fit: BoxFit.cover,);
   }
 }

@@ -1,32 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-class HadeethViewDetails extends StatefulWidget {
-  const HadeethViewDetails({super.key});
+import 'package:islami_app/modules/hadith/hadith-view.dart';
+import 'package:provider/provider.dart';
 
+import '../core/settings_provider.dart';
+
+class HadeethViewDetails extends StatefulWidget {
+   HadeethViewDetails({super.key, });
+  static const String routeName = "h";
+// Use aliases to refer to the specific class
   @override
   State<HadeethViewDetails> createState() => _HadeethViewDetailsState();
 }
-
 class _HadeethViewDetailsState extends State<HadeethViewDetails> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    String content="";
-    List<String> singleHadeth=[];
-    Future<void> loadText() async
-    {
-      content=await rootBundle.loadString("assets/ahadeth/ahadeth");
-
-      setState(() {
-        singleHadeth=content.split("#");
-      });
-      print(content);
-    }
-    if(content.isEmpty) loadText();
-
-    return Container(
-      decoration: const BoxDecoration(
-          image: DecorationImage(image: AssetImage("assets/core/background1.png"),
+    var provider=Provider.of<SettingsProvider>(context);
+    final  data = ModalRoute.of(context)!.settings.arguments as HadeethData;
+        return Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage(provider.getHomeBackground()),
               fit: BoxFit.cover)
       ),
       child: Scaffold(
@@ -46,7 +40,7 @@ class _HadeethViewDetailsState extends State<HadeethViewDetails> {
             left: 30,
           ),
           decoration: BoxDecoration(
-            color: const Color(0xFFF8F8F8).withOpacity(0.9),
+            color: provider.isLight()? const Color(0xFFF8F8F8):const Color(0xFF141A2E).withOpacity(0.5),
             borderRadius: BorderRadius.circular(25),
           ),
           child: Column(
@@ -54,20 +48,26 @@ class _HadeethViewDetailsState extends State<HadeethViewDetails> {
               Row(
                 mainAxisAlignment:MainAxisAlignment.center,
                 children: [
-                  Text("frgthyu"),
-                  const Icon(Icons.play_circle_fill_rounded,color: Color(0xFF242424),)
+                  Text(data.hadeethName,style: TextStyle(
+                      color: provider.isLight()?const Color(0xFF242424):const Color(0xFFFACC1D)
+                  ),),
                 ],
               ),
               const Divider(),
               Expanded(
-                child: ListView.builder(itemBuilder:(context,index)=>Text(
-
+                child: SingleChildScrollView(
+                  child: Text(
+                    data.hadeethContent,
+                    style: theme.textTheme.bodySmall?.copyWith(height: 2,
+                    color: provider.isLight()?const Color(0xFF242424) :const Color(0xFFFACC1D)),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ),
       ),
-    );;
+    );
   }
 }

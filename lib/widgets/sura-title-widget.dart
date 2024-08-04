@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:islami_app/modules/quran/quran-view.dart';
 import 'package:islami_app/widgets/quran-view-details.dart';
+import 'package:provider/provider.dart';
+
+import '../core/settings_provider.dart';
 class SuraDetails extends StatelessWidget {
   final SuraData data;
  const SuraDetails({super.key, required this.data});
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    var provider=Provider.of<SettingsProvider>(context);
     return  Row(
       children: [
         Expanded(
@@ -14,9 +18,9 @@ class SuraDetails extends StatelessWidget {
             style: theme.textTheme.bodyMedium,
             textAlign: TextAlign.center,),
         ),
-        const SizedBox( height: 50,
+        SizedBox( height: 50,
           child: VerticalDivider(
-            color:Color(0xFFB7935F),
+            color:provider.isLight()?const Color(0xFFB7935F):const Color(0xFFFACC1D),
             thickness: 2,
           ),
         ),
